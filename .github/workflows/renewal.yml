@@ -2,8 +2,7 @@ name: Euserv VPS Renewal
 
 on:
   schedule:
-    # 在每周日的00:00 (UTC) 运行
-    - cron: '0 0 * * 0'
+    - cron: '0 0 */3 * *'
   workflow_dispatch:
 
 jobs:
