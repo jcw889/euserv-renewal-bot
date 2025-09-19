@@ -160,11 +160,26 @@ def login(username, password):
     f = session.post(url, headers=headers, data=login_data)
     f.raise_for_status()
 
-    if "Hello" not in f.text and "Confirm or change your customer data here" not in f.text:
-        if "To finish the login process please solve the following captcha." in f.text:
+    if "To finish the login process please solve the following captcha." in f.text:
             log("检测到图片验证码，正在处理...")
+            
+            log("正在下载验证码图片...")
             image_res = session.get(captcha_image_url, headers={'user-agent': USER_AGENT})
             image_res.raise_for_status()
+            
+            timestamp = int(time.time())
+            captcha_image_filename = f"captcha_image_{timestamp}.png"
+            captcha_page_filename = f"captcha_page_{timestamp}.html"
+
+            log(f"正在保存验证码图片到 {captcha_image_filename}")
+            with open(captcha_image_filename, "wb") as img_file:
+                img_file.write(image_res.content)
+            
+            log(f"正在保存验证码页面到 {captcha_page_filename}")
+
+            with open(captcha_page_filename, "w", encoding="utf-8") as html_file:
+                html_file.write(f.text)
+
             captcha_code = solve_captcha(image_res.content)
 
             log(f"验证码计算结果是: {captcha_code}")
