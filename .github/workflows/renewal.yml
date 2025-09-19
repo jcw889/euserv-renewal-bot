@@ -36,6 +36,7 @@ jobs:
         run: python Euserv_Renewal.py
 
       - name: Upload Artifacts on Every Run
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: captcha-artifacts
