@@ -34,3 +34,12 @@ jobs:
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           NOTIFICATION_EMAIL: ${{ secrets.NOTIFICATION_EMAIL }}
         run: python Euserv_Renewal.py
+
+      - name: Upload Artifacts on Every Run
+        uses: actions/upload-artifact@v4
+        with:
+          name: captcha-artifacts
+          path: |
+            *.png
+            *.html
+          retention-days: 7
