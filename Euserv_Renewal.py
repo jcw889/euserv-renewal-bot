@@ -192,7 +192,7 @@ def login(username, password):
                 return "-1", session
             log("图片验证码验证通过")
 
-        if "To finish the login process enter the PIN that is shown in yout authenticator app." in f.text:
+if "To finish the login process enter the PIN that is shown in yout authenticator app." in f.text:
             log("检测到需要2FA验证")
             if not EUSERV_2FA:
                 log("未配置EUSERV_2FA Secret，无法进行2FA登录。")
